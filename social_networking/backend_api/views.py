@@ -1,33 +1,3 @@
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-# from rest_framework import status
-# from .models import User, FriendRequest  # Import the User model
-# from .serializers import SignUpSerializer
-# from rest_framework.permissions import IsAuthenticated
-# from rest_framework_simplejwt.authentication import JWTAuthentication
-# from rest_framework.decorators import authentication_classes, permission_classes
-# from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
-# from .models import FriendRequest
-# from .serializers import FriendRequestSerializer
-# from rest_framework_simplejwt.tokens import AccessToken
-# from rest_framework.decorators import api_view, permission_classes
-# from rest_framework.response import Response
-# from rest_framework.permissions import IsAuthenticated
-# from .serializers import ListFriendRequestSerializer
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-# from rest_framework import status, pagination
-# from .models import User
-# from .serializers import UserSearchSerializer
-# from rest_framework_simplejwt.authentication import JWTAuthentication
-# from rest_framework.permissions import IsAuthenticated
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-# from rest_framework import status
-# from rest_framework.authtoken.models import Token
-# from rest_framework_simplejwt.tokens import RefreshToken
-# from .serializers import LoginSerializer, FriendRequestSerializer
-
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
