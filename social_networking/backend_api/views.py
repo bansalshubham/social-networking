@@ -118,8 +118,8 @@ class SendRequestAPIView(APIView):
 
                 if from_user.id == to_user_id:
                     return Response({"message": "User can not send friend request to itself."}, status=status.HTTP_400_BAD_REQUEST)
-                if FriendRequest.objects.filter(from_user=from_user, to_user_id=to_user_id).exists():
-                    return Response({'message': 'Friend request already sent'}, status=status.HTTP_400_BAD_REQUEST)
+                if FriendRequest.objects.filter(from_user__in=[from_user, to_user_id], to_user_id__in=[to_user_id, from_user]).exists():
+                    return Response({'message': 'Friend request already there'}, status=status.HTTP_400_BAD_REQUEST)
 
                 FriendRequest.objects.create(from_user=from_user, to_user_id=to_user_id)
 
