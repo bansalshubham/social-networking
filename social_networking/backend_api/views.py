@@ -81,11 +81,10 @@ class UserSearchAPIView(APIView):
 
                 try:
                     if email:
-                        users = User.objects.filter(email__iexact=email)
+                        users = User.objects.filter(email__iexact=email).order_by("id")
                     elif name:
-                        users = User.objects.filter(first_name__contains=name)
+                        users = User.objects.filter(first_name__contains=name).order_by("id")
 
-                    # Use pagination from the pagination_class
                     pg = UserSearchPagination()
                     paginated_users = pg.paginate_queryset(users, request, view=self)
 
@@ -124,7 +123,6 @@ class SendRequestAPIView(APIView):
 
                 FriendRequest.objects.create(from_user=from_user, to_user_id=to_user_id)
 
-                # Use pagination from the pagination_class
                 return Response({"message": "Friend Request Send Successfully"}, status=status.HTTP_201_CREATED)
                 
             return Response({"message": "Please provide user_id"}, status=status.HTTP_400_BAD_REQUEST)
@@ -141,9 +139,9 @@ class AcceptFriendRequestAPIView(APIView):
 
             if serializer.is_valid():
                 try:
-                    from_user = request.user  # The authenticated user sending the request
+                    user = request.user  # The authenticated user sending the request
                     friend_request_id = serializer.validated_data['id']
-                    friend_request = FriendRequest.objects.get(from_user=from_user, id=friend_request_id, request_status='PENDING')
+                    friend_request = FriendRequest.objects.get(to_user=user, id=friend_request_id, request_status='PENDING')
                 except FriendRequest.DoesNotExist:
                     return Response({'message': 'Friend request not found or already accepted/rejected'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -166,15 +164,15 @@ class RejectFriendRequestAPIView(APIView):
 
             if serializer.is_valid():
                 try:
-                    from_user = request.user  # The authenticated user sending the request
+                    user = request.user  # The authenticated user sending the request
                     friend_request_id = serializer.validated_data['id']
-                    friend_request = FriendRequest.objects.get(from_user=from_user, id=friend_request_id, request_status='PENDING')
+                    friend_request = FriendRequest.objects.get(to_user=user, id=friend_request_id, request_status='PENDING')
                 except FriendRequest.DoesNotExist:
                     return Response({'message': 'Friend request not found or already accepted/rejected'}, status=status.HTTP_404_NOT_FOUND)
 
                 friend_request.request_status = 'REJECTED'
                 friend_request.save()
-                logger.info(f"Friend request REJECTED from {from_user.id} for {friend_request.id}")
+
                 return Response({'message': 'Friend request REJECTED'}, status=status.HTTP_200_OK)
             
             return Response({"message": "Please provide request id"}, status=status.HTTP_400_BAD_REQUEST)
@@ -205,7 +203,7 @@ class ListPendingFriendsAPIView(APIView):
     def get(self, request):
         try:
             user = request.user
-            friends = FriendRequest.objects.filter(from_user=user, request_status='PENDING').select_related('to_user')
+            friends = FriendRequest.objects.filter(to_user=user, request_status='PENDING').select_related('to_user')
 
             serializer = ListFriendRequestSerializer(friends, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)

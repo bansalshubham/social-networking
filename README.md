@@ -8,11 +8,9 @@ A Django Apllication build on REST.
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
+- [Running with Docker](#running-with-docker)
+- [Limitations](#limitations)
+- [Postman collection](#postman-collection)
 
 ## Installation
 
@@ -95,3 +93,13 @@ A Django Apllication build on REST.
    ```
 
 5. Access your project at [http://0.0.0.0:8000](http://0.0.0.0:8000)
+
+## Limitations
+
+1. Currently DRF Throtlling is used for API rate limiting. This rate limit per server basis.Hence it required changes to work on application level.
+2. Add more logging
+3. Need to use pagination in all GET API
+
+## Postman collection
+
+    social-networking.postman_collection.json
