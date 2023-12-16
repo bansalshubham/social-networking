@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "2953b8b3-3d90-42f3-9f7b-e0c9c667616b",
+		"name": "social-networking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18253275",
+		"_collection_link": "https://gold-space-824703.postman.co/workspace/centralpipeline~50e1b2ae-7692-41ff-8261-bee245494739/collection/18253275-2953b8b3-3d90-42f3-9f7b-e0c9c667616b?action=share&source=collection_link&creator=18253275"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"shubham30.bansal@gmail.com\",\r\n    \"password\": \"shubham\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8000/api/signup/",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"signup",
+						""
+					]
+				},
+				"description": "API to signin Only required email and password"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"shubham30.bansal@gmail.com\",\r\n    \"password\": \"shubham\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8000/api/login/",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search-user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyNDUyMjg3LCJpYXQiOjE3MDI0MzQyODcsImp0aSI6IjA4MmExMWVjMzkzMjQyNmE5NDIyZTA5NDI2Y2IyY2UyIiwidXNlcl9pZCI6MX0.6rMkFuENnTzQCdQz4BdKl9a34Im5muiDQDQhnSkllpA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyMzg5MTg5LCJpYXQiOjE3MDIzODg4ODksImp0aSI6ImYxNTYzMTE3MjRmZjQzYzY4M2Y0MGU2NzYyN2YxZjI3IiwidXNlcl9pZCI6MX0.g_u0J_CUEL9Y9eg2sy_F1rzuesBJc5pTodZlzVnFVzI",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://0.0.0.0:8000/api/search-user/",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"search-user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list friends",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyNjU5MTU5LCJpYXQiOjE3MDI2NDExNTksImp0aSI6IjAxMTE4MTk5M2EyZDQxMjBiZmE2YzIxMjA1ZjRhNTFhIiwidXNlcl9pZCI6MX0.AAVkpZQQgRiD3bab_Vypa_CNx8IcfdsP_HZ8kT2YIsM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyMzg5MTg5LCJpYXQiOjE3MDIzODg4ODksImp0aSI6ImYxNTYzMTE3MjRmZjQzYzY4M2Y0MGU2NzYyN2YxZjI3IiwidXNlcl9pZCI6MX0.g_u0J_CUEL9Y9eg2sy_F1rzuesBJc5pTodZlzVnFVzI",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://0.0.0.0:8000/api/list-friends/",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"list-friends",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pending friends",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyNjU5MTU5LCJpYXQiOjE3MDI2NDExNTksImp0aSI6IjAxMTE4MTk5M2EyZDQxMjBiZmE2YzIxMjA1ZjRhNTFhIiwidXNlcl9pZCI6MX0.AAVkpZQQgRiD3bab_Vypa_CNx8IcfdsP_HZ8kT2YIsM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyMzg5MTg5LCJpYXQiOjE3MDIzODg4ODksImp0aSI6ImYxNTYzMTE3MjRmZjQzYzY4M2Y0MGU2NzYyN2YxZjI3IiwidXNlcl9pZCI6MX0.g_u0J_CUEL9Y9eg2sy_F1rzuesBJc5pTodZlzVnFVzI",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://0.0.0.0:8000/api/pending-friends/",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pending-friends",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "send-request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyNjI1MTQ3LCJpYXQiOjE3MDI2MDcxNDcsImp0aSI6IjMwOTk5MDM0YjRjODRlYjlhYTY1Nzg2ZjdhNzRlMzUyIiwidXNlcl9pZCI6MX0.udZC-GVuKeptgGJdKCzq0uguPsXlJO7Wv8MHRmD1Bv4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyMzg5MTg5LCJpYXQiOjE3MDIzODg4ODksImp0aSI6ImYxNTYzMTE3MjRmZjQzYzY4M2Y0MGU2NzYyN2YxZjI3IiwidXNlcl9pZCI6MX0.g_u0J_CUEL9Y9eg2sy_F1rzuesBJc5pTodZlzVnFVzI",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://0.0.0.0:8000/api/send-request/?user_id=3",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"send-request",
+						""
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "accept-request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyNjU5MTU5LCJpYXQiOjE3MDI2NDExNTksImp0aSI6IjAxMTE4MTk5M2EyZDQxMjBiZmE2YzIxMjA1ZjRhNTFhIiwidXNlcl9pZCI6MX0.AAVkpZQQgRiD3bab_Vypa_CNx8IcfdsP_HZ8kT2YIsM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyMzg5MTg5LCJpYXQiOjE3MDIzODg4ODksImp0aSI6ImYxNTYzMTE3MjRmZjQzYzY4M2Y0MGU2NzYyN2YxZjI3IiwidXNlcl9pZCI6MX0.g_u0J_CUEL9Y9eg2sy_F1rzuesBJc5pTodZlzVnFVzI",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://0.0.0.0:8000/api/accept-request/?id=17",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"accept-request",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "17"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reject-request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyNjU5MTU5LCJpYXQiOjE3MDI2NDExNTksImp0aSI6IjAxMTE4MTk5M2EyZDQxMjBiZmE2YzIxMjA1ZjRhNTFhIiwidXNlcl9pZCI6MX0.AAVkpZQQgRiD3bab_Vypa_CNx8IcfdsP_HZ8kT2YIsM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyMzg5MTg5LCJpYXQiOjE3MDIzODg4ODksImp0aSI6ImYxNTYzMTE3MjRmZjQzYzY4M2Y0MGU2NzYyN2YxZjI3IiwidXNlcl9pZCI6MX0.g_u0J_CUEL9Y9eg2sy_F1rzuesBJc5pTodZlzVnFVzI",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://0.0.0.0:8000/api/reject-request/?id=18",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"reject-request",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "18"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

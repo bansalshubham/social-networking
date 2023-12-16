@@ -97,10 +97,10 @@ class SendRequestAPITestCase(APITestCase):
         response = self.client.post(f'/api/send-request/?user_id={self.user2.id}')
 
         # Ensure the request was successful (status code 200)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # Ensure the response message is correct
-        self.assertEqual(response.data, 'Friend Request Send Successfully')
+        self.assertEqual(response.data, {'message': 'Friend Request Send Successfully'})
 
     def test_send_request_authenticated_self_request(self):
         # Authenticate user1
@@ -229,7 +229,7 @@ class RejectFriendRequestAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Ensure the response message is correct
-        self.assertEqual(response.data, {'status': 'Friend request REJECTED'})
+        self.assertEqual(response.data, {'message': 'Friend request REJECTED'})
 
         # Refresh the friend request from the database
         self.friend_request.refresh_from_db()

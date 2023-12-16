@@ -24,19 +24,6 @@ import logging
 logger = logging.getLogger("social_app")
 
 
-
-# def get_user_email(request):
-#     # Decode the token
-#     token = request.auth
-#     decoded_token = AccessToken()
-#     decoded_token = decoded_token.payload # .decode(token, verify=False)  # Set verify to False for now
-#     print(decoded_token)
-#     # Extract user email
-#     user_email = decoded_token['payload']['email'] if 'email' in decoded_token['payload'] else None
-
-#     return Response({'email': user_email})
-
-
 class SignUpAPIView(APIView):
     def post(self, request, *args, **kwargs):
         try:
@@ -52,14 +39,11 @@ class SignUpAPIView(APIView):
 
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response({"email": email, "message": "signed up successfully."}, status=status.HTTP_201_CREATED)
 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Please provide email to signup."}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return Response("Some Internal server error.", status=status.HTTP_503_SERVICE_UNAVAILABLE)
-
-    
-# yourapp/views.py
+            return Response({"message": "Some Internal server error."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
 
 class LoginAPIView(APIView):
@@ -79,24 +63,9 @@ class LoginAPIView(APIView):
                 return response
             
 
-            return Response("Email and password required.", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Email and password required."}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return Response("Some Internal server error.", status=status.HTTP_503_SERVICE_UNAVAILABLE)
-    
-# @authentication_classes([JWTAuthentication])
-# @permission_classes([IsAuthenticated])
-# class Test(APIView):
-    
-#     def get(self, request):
-#         # email = get_user_email(request)
-#         print(request.auth.payload)
-#         print(request.user)
-#         return Response(f"Hello")
-    
-
-# views.py
-
-
+            return Response({"message": "Some Internal server error."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
 
 @authentication_classes([JWTAuthentication])
@@ -127,9 +96,9 @@ class UserSearchAPIView(APIView):
                 except User.DoesNotExist:
                     return Response({'error': 'No users found'}, status=status.HTTP_404_NOT_FOUND)
                 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Either provide email or name to search"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return Response("Some Internal server error.", status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            return Response({"message": "Some Internal server error."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
     
 
@@ -150,18 +119,18 @@ class SendRequestAPIView(APIView):
                 to_user_id = serializer.validated_data['user_id']
 
                 if from_user.id == to_user_id:
-                    return Response("not possible")
+                    return Response({"message": "User can not send friend request to itself."}, status=status.HTTP_400_BAD_REQUEST)
                 if FriendRequest.objects.filter(from_user=from_user, to_user_id=to_user_id).exists():
-                    return Response({'error': 'Friend request already sent'}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response({'message': 'Friend request already sent'}, status=status.HTTP_400_BAD_REQUEST)
 
                 FriendRequest.objects.create(from_user=from_user, to_user_id=to_user_id)
 
                 # Use pagination from the pagination_class
-                return Response("Friend Request Send Successfully")
+                return Response({"message": "Friend Request Send Successfully"}, status=status.HTTP_201_CREATED)
                 
-            return Response("Please provide user_id", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Please provide user_id"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return Response("Some Internal server error.", status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            return Response({"message": "Some Internal server error."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
@@ -177,16 +146,16 @@ class AcceptFriendRequestAPIView(APIView):
                     friend_request_id = serializer.validated_data['id']
                     friend_request = FriendRequest.objects.get(from_user=from_user, id=friend_request_id, request_status='PENDING')
                 except FriendRequest.DoesNotExist:
-                    return Response({'error': 'Friend request not found or already accepted/rejected'}, status=status.HTTP_404_NOT_FOUND)
+                    return Response({'message': 'Friend request not found or already accepted/rejected'}, status=status.HTTP_404_NOT_FOUND)
 
                 friend_request.request_status = 'ACCEPTED'
                 friend_request.save()
 
-                return Response({'status': 'Friend request accepted'}, status=status.HTTP_200_OK)
-            return Response("Please provide request id", status=status.HTTP_400_BAD_REQUEST)
+                return Response({'message': 'Friend request accepted'}, status=status.HTTP_200_OK)
+            return Response({"message": "Please provide request id"}, status=status.HTTP_400_BAD_REQUEST)
         
         except Exception as e:
-            return Response("Some Internal server error.", status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            return Response({"message": "Some Internal server error."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
@@ -202,17 +171,17 @@ class RejectFriendRequestAPIView(APIView):
                     friend_request_id = serializer.validated_data['id']
                     friend_request = FriendRequest.objects.get(from_user=from_user, id=friend_request_id, request_status='PENDING')
                 except FriendRequest.DoesNotExist:
-                    return Response({'error': 'Friend request not found or already accepted/rejected'}, status=status.HTTP_404_NOT_FOUND)
+                    return Response({'message': 'Friend request not found or already accepted/rejected'}, status=status.HTTP_404_NOT_FOUND)
 
                 friend_request.request_status = 'REJECTED'
                 friend_request.save()
                 logger.info(f"Friend request REJECTED from {from_user.id} for {friend_request.id}")
-                return Response({'status': 'Friend request REJECTED'}, status=status.HTTP_200_OK)
+                return Response({'message': 'Friend request REJECTED'}, status=status.HTTP_200_OK)
             
-            return Response("Please provide request id", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Please provide request id"}, status=status.HTTP_400_BAD_REQUEST)
         
         except Exception as e:
-            return Response("Some Internal server error.", status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            return Response({"message": "Some Internal server error."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         
 
 
@@ -221,20 +190,27 @@ class RejectFriendRequestAPIView(APIView):
 @permission_classes([IsAuthenticated])
 class ListFriendsAPIView(APIView):
     def get(self, request):
-        user = request.user
-        friends = FriendRequest.objects.filter(from_user=user, request_status='ACCEPTED').select_related('to_user')
+        try:
+            user = request.user
+            friends = FriendRequest.objects.filter(from_user=user, request_status='ACCEPTED').select_related('to_user')
 
-        serializer = ListFriendRequestSerializer(friends, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            serializer = ListFriendRequestSerializer(friends, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"message": "Some Internal server error."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
     
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 class ListPendingFriendsAPIView(APIView):
     def get(self, request):
-        user = request.user
-        friends = FriendRequest.objects.filter(from_user=user, request_status='PENDING').select_related('to_user')
+        try:
+            user = request.user
+            friends = FriendRequest.objects.filter(from_user=user, request_status='PENDING').select_related('to_user')
 
-        serializer = ListFriendRequestSerializer(friends, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            serializer = ListFriendRequestSerializer(friends, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"message": "Some Internal server error."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
 

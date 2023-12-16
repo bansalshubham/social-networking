@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'social_networking.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE'),
+        'NAME': os.environ.get('MYSQL_DATABASE', 'social_networking'),
         'USER': 'root',
-        'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD'),
-        'HOST': "mydb",
+        'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', 'root'),
+        'HOST': os.environ.get('MYSQL_DOCKER_IMAGE_NAME', 'localhost'),
         'PORT': '3306',
     }
 }
