@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     build: .
-    command: bash -c "python manage.py migrate && python manage.py test backend_api.tests && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "sleep 30 && python manage.py migrate && python manage.py test backend_api.tests && python manage.py runserver 0.0.0.0:8000"
     environment:
       MYSQL_DATABASE: social_networking
       MYSQL_ROOT_PASSWORD: root
