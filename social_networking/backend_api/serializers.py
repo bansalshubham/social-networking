@@ -94,7 +94,7 @@ class ListFriendRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FriendRequest
-        fields = ['id', 'to_user', 'request_status']
+        fields = ['id', 'from_user', 'request_status']
 
     
 
