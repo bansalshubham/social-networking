@@ -9,12 +9,13 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ALLOWED_HOSTS=['*']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -24,8 +25,6 @@ SECRET_KEY = 'django-insecure-!9r26&jw*0&1kae-!+=-&z@&*=y^t*0mb32rxk3=4mw^+v(x+(
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -74,14 +73,14 @@ WSGI_APPLICATION = 'social_networking.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+#social_networking
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'social_networking',
+        'NAME': os.environ.get('MYSQL_DATABASE'),
         'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD'),
+        'HOST': "mydb",
         'PORT': '3306',
     }
 }
@@ -160,9 +159,6 @@ REST_FRAMEWORK = {
         'user': '3/min',  # Throttle for authenticated users
     },
 }
-
-# settings.py
-import os
 
 LOGGING_DIR = os.path.join(BASE_DIR, 'logs')  # Adjust the path as needed
 

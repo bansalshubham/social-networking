@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      MYSQL_DATABASE: social_networking
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mydb
+
+  mydb:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: social_networking
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
