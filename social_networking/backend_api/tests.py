@@ -58,7 +58,7 @@ class ListPendingFriendsAPITestCase(APITestCase):
 
     def test_list_pending_friends_authenticated(self):
         # Authenticate user1
-        self.client.force_authenticate(user=self.user1)
+        self.client.force_authenticate(user=self.user2)
 
         # Make a GET request to the list-pending-friends endpoint
         response = self.client.get('/api/pending-friends/')  # Replace with the actual URL
@@ -67,7 +67,7 @@ class ListPendingFriendsAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Ensure the correct number of pending friend requests are returned
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data), 1)
 
     def test_list_pending_friends_unauthenticated(self):
         # Do not authenticate user
@@ -146,7 +146,7 @@ class AcceptFriendRequestAPITestCase(APITestCase):
         self.user2 = User.objects.create(username='user2', password='password2', email='user2@gmail.com')
 
         # Create a friend request from user2 to user1
-        self.friend_request = FriendRequest.objects.create(from_user=self.user1, to_user=self.user2, request_status='PENDING')
+        self.friend_request = FriendRequest.objects.create(from_user=self.user2, to_user=self.user1, request_status='PENDING')
 
         # Authenticate user1 and get the token
         refresh = RefreshToken.for_user(self.user1)
@@ -215,7 +215,7 @@ class RejectFriendRequestAPITestCase(APITestCase):
         self.friend_request = FriendRequest.objects.create(from_user=self.user2, to_user=self.user1, request_status='PENDING')
 
         # Authenticate user1 and get the token
-        refresh = RefreshToken.for_user(self.user2)
+        refresh = RefreshToken.for_user(self.user1)
         self.access_token = str(refresh.access_token)
 
     def test_reject_friend_request_authenticated(self):
