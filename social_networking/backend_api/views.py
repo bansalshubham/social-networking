@@ -29,15 +29,14 @@ class SignUpAPIView(APIView):
         try:
             # Retrieve the email from the request data
             email = request.data.get('email', None)
-
-            # Check if a user with the given email already exists
-            if User.objects.filter(email=email).exists():
-                return Response({'detail': 'User with this email already exists.'}, status=status.HTTP_400_BAD_REQUEST)
-
             # If the email is unique, proceed with creating the user
             serializer = SignUpSerializer(data=request.data)
 
             if serializer.is_valid():
+                email = email.lower()
+                # Check if a user with the given email already exists
+                if User.objects.filter(email__iexact=email).exists():
+                    return Response({'detail': 'User with this email already exists.'}, status=status.HTTP_400_BAD_REQUEST)
                 serializer.save()
                 return Response({"email": email, "message": "signed up successfully."}, status=status.HTTP_201_CREATED)
 
@@ -82,7 +81,7 @@ class UserSearchAPIView(APIView):
 
                 try:
                     if email:
-                        users = User.objects.filter(email=email.lower())
+                        users = User.objects.filter(email__iexact=email)
                     elif name:
                         users = User.objects.filter(first_name__contains=name)
 

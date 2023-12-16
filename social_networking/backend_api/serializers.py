@@ -32,7 +32,7 @@ class LoginSerializer(serializers.Serializer):
         email = data.get('email')
         password = data.get('password')
 
-        user = User.objects.filter(email=email).first()
+        user = User.objects.filter(email__iexact=email).first()
 
         if not user:
             raise serializers.ValidationError("Incorrect credentials. Please try again.")
@@ -65,15 +65,6 @@ class UserSearchSerializer(serializers.Serializer):
     def validate_name(self, value):
         # You can add custom validation logic here if needed
         return value
-
-# serializers.py
-# from rest_framework import serializers
-# from .models import User
-
-# class UserSearchSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ['email']  # Add other fields as needed
 
 class FriendRequestSerializer(serializers.Serializer):
     id = serializers.IntegerField()
