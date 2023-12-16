@@ -26,7 +26,7 @@ class ListFriendsAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Ensure the correct number of friends are returned
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data), 2)
 
         # Ensure the correct friend data is returned
         friend_data = response.data[0]

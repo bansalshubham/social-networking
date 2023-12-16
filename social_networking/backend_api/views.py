@@ -9,7 +9,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from rest_framework.authtoken.models import Token
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
-
+from django.db.models import Q
 from .models import FriendRequest, User
 from .serializers import (
     SignUpSerializer,
@@ -189,7 +189,7 @@ class ListFriendsAPIView(APIView):
     def get(self, request):
         try:
             user = request.user
-            friends = FriendRequest.objects.filter(from_user=user, request_status='ACCEPTED').select_related('to_user')
+            friends = FriendRequest.objects.filter(Q(from_user=user) | Q(to_user=user), request_status='ACCEPTED').select_related('to_user', 'from_user')
 
             serializer = ListFriendRequestSerializer(friends, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
